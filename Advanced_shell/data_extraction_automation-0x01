@@ -1,19 +1,19 @@
 #!/bin/bash
 # Script: data_extraction_automation-0x01
-# Objective: Extract Pikachu's name, height, weight, and type from data.json
+# Objective: Extract Pikachu's name, height, weight, and type from data.json in human-readable format
 
 JSON_FILE="data.json"
 
 # Extract fields using jq
-NAME=$(jq -r '.name' "$JSON_FILE" | sed 's/.*/\u&/')  # Capitalize first letter
-HEIGHT_DM=$(jq -r '.height' "$JSON_FILE")
-WEIGHT_HG=$(jq -r '.weight' "$JSON_FILE")
-TYPE=$(jq -r '.types[0].type.name' "$JSON_FILE" | sed 's/.*/\u&/')
+name=$(jq -r '.name' "$JSON_FILE" | sed 's/.*/\u&/')
+height_dm=$(jq -r '.height' "$JSON_FILE")
+weight_hg=$(jq -r '.weight' "$JSON_FILE")
+type=$(jq -r '.types[0].type.name' "$JSON_FILE" | sed 's/.*/\u&/')
 
-# Convert units (dm → m, hg → kg) using awk
-HEIGHT_M=$(echo "$HEIGHT_DM" | awk '{printf "%.1f", $1/10}')
-WEIGHT_KG=$(echo "$WEIGHT_HG" | awk '{printf "%.1f", $1/10}')
+# Convert units
+formatted_height=$(echo "$height_dm" | awk '{printf "%.1f", $1/10}')
+formatted_weight=$(echo "$weight_hg" | awk '{printf "%.1f", $1/10}')
 
-# Final output
-echo "$NAME is of type $TYPE, weighs ${WEIGHT_KG}kg, and is ${HEIGHT_M}m tall."
+# Print output exactly as required
+echo "$name is of type $type, weighs ${formatted_weight}kg, and is ${formatted_height}m tall."
 
