@@ -21,4 +21,3 @@ if [ "$HTTP_STATUS" -ne 200 ]; then
 else
     echo "✅ Data saved to $OUTPUT_FILE"
 fi
-
